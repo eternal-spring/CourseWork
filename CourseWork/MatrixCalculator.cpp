@@ -51,6 +51,5 @@ matrix MatrixCalculator::Multiply(const matrix& leftMatrix, const matrix& rightM
             }
         }
     }
-    
     return result;
 }
