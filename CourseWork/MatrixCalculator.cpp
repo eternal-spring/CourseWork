@@ -41,14 +41,15 @@ matrix MatrixCalculator::Transpose(const matrix& original)
 matrix MatrixCalculator::Multiply(const matrix& leftMatrix, const matrix& rightMatrix, bool parallel)
 {
     matrix result(leftMatrix.size(), std::vector<int>(rightMatrix.at(0).size()));
-#pragma omp parallel for if (parallel)
-    for (int row = 0; row < result.size(); ++row) {
-        for (int col = 0; col < result.at(0).size(); ++col) {
-            for (int inner = 0; inner < rightMatrix.size(); ++inner) {
-                result.at(row).at(col) += leftMatrix.at(row).at(inner) * rightMatrix.at(inner).at(col);
+    int row, col, inner;
+#pragma omp parallel for if (parallel) num_threads(8) private(row, col, inner) shared(leftMatrix, rightMatrix, result)
+    for (row = 0; row < result.size(); ++row) {
+        for (col = 0; col < result.at(0).size(); ++col) {
+            auto cell = &result.at(row).at(col);
+            for (inner = 0; inner < rightMatrix.size(); ++inner) {
+                *cell += leftMatrix.at(row).at(inner) * rightMatrix.at(inner).at(col);
             }
         }
     }
-    
     return result;
 }

@@ -1,16 +1,14 @@
-﻿#include "Decomposition.h"
+﻿#include <iostream>
+#include "Decomposition.h"
 #include "GridGenerator.h"
-#include <iostream>
 #include <chrono>
 #include <functional>
 using namespace std::placeholders;
 
 int main()
 {
-    std::vector<std::pair<int, int>> sizes = { {50, 10}, {50, 25}, {100, 10}, {100, 25},
-                                                {100, 50}, {250, 50}, {250, 100}, {250, 125},
-                                                {500, 50}, {500, 100}, {500, 250}, {1000, 100}, {1000, 250},
-                                                {1000, 500}, {5000, 500}, {5000, 1000}, {5000, 2500} };
+    std::vector<std::pair<int, int>> sizes = { {500, 50}, {500, 250}, {1000, 250},
+                                                {1000, 500}, {5000, 1000}, {5000, 2500} };
     for (auto &pair : sizes) {
         std::cout << "Original Grid Size: " << pair.first << " \n";
         std::cout << "Enlarged Grid Size: " << pair.second << " \n";
