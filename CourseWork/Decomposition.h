@@ -1,8 +1,11 @@
 #include<vector>
 #include "Grid.h"
+#include<Eigen/Dense>
+#include <Eigen/Sparse>
 
-using matrix = std::vector<std::vector<int>>;
-using flow = std::vector<double>;
+using namespace Eigen;
+using matrix = MatrixXi;
+using flow = VectorXd;
 
 class Decomposition
 {
