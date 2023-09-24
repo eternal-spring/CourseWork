@@ -17,18 +17,18 @@ void Decomposition::FindEmbeddingAndExtensionMatrix(Grid& original, Grid& enlarg
 	auto original_flow = original.getValues();
 	const int columns_count = original_flow.rows() - 1;
 	const int rows_count = enlarged_flow.rows() - 1;
-	matrix embedding_matrix = matrix::Zero(rows_count, columns_count);
-	matrix extension_matrix = matrix::Zero(rows_count, columns_count);
+	SparseMatrix<int> embedding_matrix(rows_count, columns_count);
+	SparseMatrix<int> extension_matrix(rows_count, columns_count);
 	int row = 0;
-	embedding_matrix(0, 0) = 1;
-	extension_matrix(0, 0) = 1;
+	embedding_matrix.insert(0, 0) = 1;
+	extension_matrix.insert(0, 0) = 1;
 	for (int i = 1; i < columns_count; i++)
 	{
 		if (enlarged_flow(row + 1) == original_flow(i)) {
 			row++;
-			extension_matrix(row, i) = 1;
+			extension_matrix.insert(row, i) = 1;
 		}
-		embedding_matrix(row, i) = 1;
+		embedding_matrix.insert(row, i) = 1;
 	}
 	mEmbeddingMatrix = embedding_matrix;
 	mExtensionMatrix = extension_matrix;
@@ -37,11 +37,11 @@ void Decomposition::FindEmbeddingAndExtensionMatrix(Grid& original, Grid& enlarg
 void Decomposition::FindMainFlow(bool parallel) {
 	auto extension_matrix = getExtensionMatrix();
 	auto original_flow = getOriginalFlow();
-	flow main(extension_matrix.rows());
+	VectorXd main(extension_matrix.rows());
 #pragma omp parallel for if (parallel)
 	for (int i = 0; i < extension_matrix.rows(); ++i) {
 		for (int j = 0; j < extension_matrix.cols(); ++j) {
-			if (extension_matrix(i, j) == 1) {
+			if (extension_matrix.coeff(i, j) == 1) {
 				main(i) = original_flow(j);
 				break;
 			}
@@ -54,16 +54,14 @@ void Decomposition::FindWaveletFlow(bool parallel) {
 	auto embedding_matrix = getEmbeddingMatrix();
 	auto extension_matrix = getExtensionMatrix();
 	auto original_flow = getOriginalFlow();
-	flow wavelet = flow::Zero(extension_matrix.cols());
-	SparseMatrix<int> sparse_embedding = embedding_matrix.sparseView();
-	SparseMatrix<int> sparse_extension = extension_matrix.sparseView();
+	VectorXd wavelet = VectorXd::Zero(extension_matrix.cols());
 	SparseMatrix<int> identity(extension_matrix.cols(), extension_matrix.cols());
 	identity.setIdentity();
 	if (parallel) { 
 		Eigen::initParallel(); 
 		Eigen::setNbThreads(8);
 	}
-	SparseMatrix<int> wavelet_matrix = identity - sparse_embedding.transpose() * sparse_extension;
+	SparseMatrix<int> wavelet_matrix = identity - embedding_matrix.transpose() * extension_matrix;
 #pragma omp parallel for if (parallel)
 	for (int i = 0; i < wavelet_matrix.rows(); ++i) {
 		for (int j = 0; j < wavelet_matrix.cols(); ++j) {

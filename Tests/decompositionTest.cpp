@@ -10,18 +10,14 @@ protected:
     }
     std::vector<double> original;
     std::vector<double> enlarged;
-    matrix embedding{ { 1, 1, 0, 0, 0, 0 }, { 0, 0, 1, 1, 1, 0 }, { 0, 0, 0, 0, 0, 1 } };
-    matrix extension{ { 1, 0, 0, 0, 0, 0 }, { 0, 0, 1, 0, 0, 0 }, { 0, 0, 0, 0, 0, 1 } };
-    flow main{ { 0, 2, 5 } };
-    flow wavelet{ {0, 1, 0, 1, 2, 0 } };
+    VectorXd main{ { 0, 2, 5 } };
+    VectorXd wavelet{ {0, 1, 0, 1, 2, 0 } };
 };
 
 TEST_F(DecompositionTest, DecompositionWorks) {
     Decomposition decomposition(Grid(original), Grid(enlarged), false);
     ASSERT_EQ(decomposition.getMainFlow(), main);
     EXPECT_EQ(decomposition.getWaveletFlow(), wavelet);
-    EXPECT_EQ(decomposition.getEmbeddingMatrix(), embedding);
-    //EXPECT_EQ(decomposition.getExtensionMatrix(), extension);
     Decomposition parallel_decomposition(Grid(original), Grid(enlarged), true);
     ASSERT_EQ(parallel_decomposition.getMainFlow(), main);
 }
