@@ -57,10 +57,6 @@ void Decomposition::FindWaveletFlow(bool parallel) {
 	VectorXd wavelet = VectorXd::Zero(extension_matrix.cols());
 	SparseMatrix<int> identity(extension_matrix.cols(), extension_matrix.cols());
 	identity.setIdentity();
-	if (parallel) { 
-		Eigen::initParallel(); 
-		Eigen::setNbThreads(8);
-	}
 	SparseMatrix<int> wavelet_matrix = identity - embedding_matrix.transpose() * extension_matrix;
 #pragma omp parallel for if (parallel)
 	for (int i = 0; i < wavelet_matrix.rows(); ++i) {
