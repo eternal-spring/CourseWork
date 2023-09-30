@@ -5,23 +5,11 @@ std::vector<double> MpiHelper::EigenToStd(Eigen::VectorXd EigenVector) {
 }
 
 Eigen::VectorXd MpiHelper::MpiMainFlow(Eigen::VectorXd& original, Eigen::SparseMatrix<int>& extension, int rank, int numtasks) {
-	//int numtasks, rank;
 	const std::vector<double> local_main = MainFlowForRank(original, extension, rank, numtasks);
-	std::vector<double> *total_main = new std::vector<double>(local_main.size());
-	//std::vector<double>& total_main_address = total_main;
 	int size = extension.rows();
-	//MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	//MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
-	//local_main = MainFlowForRank(original, extension, rank, numtasks);
-	MPI_Reduce(&local_main, &(*total_main), local_main.size(), MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-	//MPI_Reduce_local(&local_main, &total_main, size, MPI_DOUBLE, MPI_SUM);
-	//std::vector<double> main(*total_main);
-	//auto main = total_main;
-	//return main;
-
-	Eigen::VectorXd main;
-	main = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(total_main->data(), total_main->size());
-	return main;
+	std::vector<double> total_main(size);
+	MPI_Reduce(local_main.data(), total_main.data(),size, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+	return  Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(total_main.data(), total_main.size());
 }
 
 MpiHelper::MpiHelper()
