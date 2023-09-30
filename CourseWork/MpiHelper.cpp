@@ -9,17 +9,26 @@ Eigen::VectorXd MpiHelper::MpiMainFlow(Eigen::VectorXd& original, Eigen::SparseM
 	int size = extension.rows();
 	std::vector<double> total_main(size);
 	MPI_Reduce(local_main.data(), total_main.data(),size, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-	return  Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(total_main.data(), total_main.size());
+	return Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(total_main.data(), total_main.size());
+}
+
+std::vector<double> MpiHelper::WaveletFlowForRank(Eigen::VectorXd& original, Eigen::SparseMatrix<int>& wavelet, int rank, int ranks_num)
+{
+	auto& wavelet_matrix = wavelet;
+	auto& original_flow = original;
+	Eigen::VectorXd local_wavelet = Eigen::VectorXd::Zero(wavelet_matrix.rows());
+	auto partition = wavelet_matrix.rows() / ranks_num;
+	for (int i = partition * rank; i < partition * rank + partition; ++i) {
+		for (int j = 0; j < wavelet_matrix.cols(); ++j) {
+			local_wavelet(i) += original_flow(j) * wavelet_matrix.coeff(i, j);
+		}
+	}
+	return EigenToStd(local_wavelet);
 }
 
 MpiHelper::MpiHelper()
 {
 }
-
-//MpiHelper::~MpiHelper()
-//{
-//}
-
 
 std::vector<double> MpiHelper::MainFlowForRank(Eigen::VectorXd original, Eigen::SparseMatrix<int> extension, int rank, int ranks_num) {
 	auto& extension_matrix = extension;
@@ -35,5 +44,14 @@ std::vector<double> MpiHelper::MainFlowForRank(Eigen::VectorXd original, Eigen::
 		}
 	}
 	return EigenToStd(local_main);
+}
+
+Eigen::VectorXd MpiHelper::MpiWaveletFlow(Eigen::VectorXd original, Eigen::SparseMatrix<int> wavelet, int rank, int numranks)
+{
+	const std::vector<double> local_main = WaveletFlowForRank(original, wavelet, rank, numranks);
+	int size = wavelet.rows();
+	std::vector<double> total_main(size);
+	MPI_Reduce(local_main.data(), total_main.data(), size, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+	return Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(total_main.data(), total_main.size());
 }
 

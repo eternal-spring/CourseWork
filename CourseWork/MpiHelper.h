@@ -9,9 +9,9 @@ class MpiHelper
 public:
 	std::vector<double> EigenToStd(Eigen::VectorXd vector);
 	std::vector<double> MainFlowForRank(Eigen::VectorXd original, Eigen::SparseMatrix<int> extension, int rank, int numranks);
+	Eigen::VectorXd MpiWaveletFlow(Eigen::VectorXd original, Eigen::SparseMatrix<int> wavelet, int rank, int numranks);
 	Eigen::VectorXd MpiMainFlow(Eigen::VectorXd& original, Eigen::SparseMatrix<int>& extension, int rank, int numtasks);
-
+	std::vector<double> WaveletFlowForRank(Eigen::VectorXd& original, Eigen::SparseMatrix<int>& wavelet, int rank, int numtasks);
 	MpiHelper();
-	//~MpiHelper();
 };
 
