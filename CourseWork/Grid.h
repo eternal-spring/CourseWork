@@ -1,5 +1,5 @@
-#include<vector>
-#include<Eigen/Dense>
+#include <vector>
+#include <Eigen/Dense>
 #pragma once
 
 using namespace Eigen;
@@ -15,5 +15,7 @@ public:
 	void SetValues(std::vector<double> values);
 
 	VectorXd getValues() { return Map<VectorXd, Unaligned>(mValues.data(), mValues.size()); }
+
+	Grid() = default;
 };
 
