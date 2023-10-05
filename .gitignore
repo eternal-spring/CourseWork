@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/.vscode
+*.exe
+/CourseWork/CourseWork.vcxproj
+*.filters
+/CourseWork/CourseWork.vcxproj
+/Tests/Tests.vcxproj
