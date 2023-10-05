@@ -25,7 +25,7 @@ void Decomposition::FindEmbeddingAndExtensionMatrix(Grid& original, Grid& enlarg
 	extension_matrix.insert(0, 0) = 1;
 	for (int i = 1; i < columns_count; i++)
 	{
-		if (enlarged_flow(row + 1) == original_flow(i)) {
+		if (enlarged_flow(static_cast<Eigen::Index>(row) + 1) == original_flow(i)) {
 			row++;
 			extension_matrix.insert(row, i) = 1;
 		}
