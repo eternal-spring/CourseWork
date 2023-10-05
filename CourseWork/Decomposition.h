@@ -1,8 +1,8 @@
-#include<vector>
+#include <vector>
 #include "Grid.h"
 #include "MpiHelper.h"
-#include<Eigen/Dense>
-#include<Eigen/Sparse>
+#include <Eigen/Dense>
+#include <Eigen/Sparse>
 
 using namespace Eigen;
 
