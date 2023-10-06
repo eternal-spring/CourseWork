@@ -41,7 +41,6 @@ void Decomposition::FindMainFlow(int rank, int numtasks) {
 	SparseMatrix<int> extension = getExtensionMatrix();
 	auto vector_flow = mpi.MpiMainFlow(original, extension, rank, numtasks);
 	mMainFlow = vector_flow;
-
 }
 
 void Decomposition::FindWaveletFlow(int rank, int numtasks) {
