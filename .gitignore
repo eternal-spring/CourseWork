@@ -367,3 +367,4 @@ FodyWeavers.xsd
 *.filters
 /CourseWork/CourseWork.vcxproj
 /Tests/Tests.vcxproj
+/CppProperties.json
