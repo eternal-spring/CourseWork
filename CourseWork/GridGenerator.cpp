@@ -3,7 +3,7 @@
 std::pair<Grid, Grid> GridGenerator::SeedTestGrids(int originalSize, int enlargedSize) {
     std::random_device rnd_device;
     std::mt19937 mersenne_engine{ rnd_device() };
-    std::uniform_real_distribution<double> dist{ 1.0, 1000000.0 };
+    std::uniform_real_distribution<double> dist{-100.0, 100.0 };
 
     auto gen = [&dist, &mersenne_engine]() {
         return dist(mersenne_engine);
