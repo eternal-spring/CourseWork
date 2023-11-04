@@ -107,6 +107,7 @@
       <ConformanceMode>true</ConformanceMode>
       <OpenMPSupport>true</OpenMPSupport>
       <AdditionalOptions>-openmp:experimental %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>E:\docs\eigen-3.4.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,13 +135,11 @@
     <ClCompile Include="CourseWork.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GridGenerator.cpp" />
-    <ClCompile Include="MatrixCalculator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Decomposition.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridGenerator.h" />
-    <ClInclude Include="MatrixCalculator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
