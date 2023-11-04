@@ -8,7 +8,7 @@ using namespace std::placeholders;
 int main()
 {
     std::vector<std::pair<int, int>> sizes = { {500, 50}, {500, 250}, {1000, 250},
-                                                {1000, 500}, {5000, 1000}, {5000, 2500} };
+                                                {1000, 500}, {5000, 1000}, {5000, 2500}, {10000, 2500}, {10000, 5000}, {20000, 10000}, {50000, 25000} };
     for (auto &pair : sizes) {
         std::cout << "Original Grid Size: " << pair.first << " \n";
         std::cout << "Enlarged Grid Size: " << pair.second << " \n";

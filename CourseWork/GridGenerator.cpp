@@ -9,11 +9,11 @@ std::pair<Grid, Grid> GridGenerator::SeedTestGrids(int originalSize, int enlarge
         return dist(mersenne_engine);
     };
 
-    flow original_flow(originalSize);
+    std::vector<double> original_flow(originalSize);
     generate(begin(original_flow), end(original_flow), gen);
-    flow::const_iterator first = original_flow.begin();
-    flow::const_iterator last = original_flow.begin() + enlargedSize - 2;
-    flow enlarged_flow(first, last);
+    std::vector<double>::const_iterator first = original_flow.begin();
+    std::vector<double>::const_iterator last = original_flow.begin() + enlargedSize - 2;
+    std::vector<double> enlarged_flow(first, last);
     auto min_elem = *min_element(original_flow.begin(), original_flow.end());
     auto max_elem = *max_element(original_flow.begin(), original_flow.end());
     enlarged_flow.push_back(min_elem);

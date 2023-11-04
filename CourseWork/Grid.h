@@ -1,17 +1,19 @@
 #include<vector>
+#include<Eigen/Dense>
 #pragma once
-using flow = std::vector<double>;
+
+using namespace Eigen;
 
 class Grid
 {
 private:
-	flow mValues;
+	std::vector<double> mValues;
 
 public:
-	Grid(flow values);
+	Grid(std::vector<double> values);
 
-	void SetValues(flow values);
+	void SetValues(std::vector<double> values);
 
-	flow getValues() { return mValues; }
+	VectorXd getValues() { return Map<VectorXd, Unaligned>(mValues.data(), mValues.size()); }
 };
 
