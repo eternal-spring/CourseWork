@@ -363,13 +363,9 @@ MigrationBackup/
 FodyWeavers.xsd
 /.vscode
 *.exe
-/CourseWork/CourseWork.vcxproj
 *.filters
-/CourseWork/CourseWork.vcxproj
-/Tests/Tests.vcxproj
 /CppProperties.json
 /Tests/matrixTest.cpp
 /CourseWork/MatrixCalculator.cpp
 /CourseWork/MatrixCalculator.h
-/Tests/matrixTest.cpp
 /Tests/matrixTest.cpp
