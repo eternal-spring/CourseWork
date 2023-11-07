@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /CourseWork/MatrixCalculator.cpp
 /CourseWork/MatrixCalculator.h
+/Tests/matrixTest.cpp
