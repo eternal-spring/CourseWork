@@ -1,5 +1,9 @@
 #include "MpiHelper.h"
 
+MpiHelper::MpiHelper()
+{
+}
+
 Eigen::VectorXd MpiHelper::MpiMainFlow(Eigen::VectorXd& original, Eigen::SparseMatrix<int>& extension, int rank, int numtasks) {
 	int size = extension.rows();
 	std::vector<double> local_main = MainFlowForRank(original, extension, rank, numtasks);
@@ -27,9 +31,6 @@ std::vector<double> MpiHelper::WaveletFlowForRank(Eigen::VectorXd& original, Eig
 	return local_wavelet;
 }
 
-MpiHelper::MpiHelper()
-{
-}
 
 std::vector<double> MpiHelper::MainFlowForRank(Eigen::VectorXd& original, Eigen::SparseMatrix<int>& extension, int rank, int ranks_num) {
 	auto& extension_matrix = extension;

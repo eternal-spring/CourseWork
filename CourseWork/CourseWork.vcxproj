@@ -107,11 +107,13 @@
       <ConformanceMode>true</ConformanceMode>
       <OpenMPSupport>true</OpenMPSupport>
       <AdditionalOptions>-openmp:experimental %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>E:\docs\eigen-3.4.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\docs\eigen-3.4.0;E:\MSMPI\SDK\Include\x64;E:\MSMPI\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>E:\MSMPI\SDK\Lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>msmpi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,7 +137,7 @@
     <ClCompile Include="CourseWork.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GridGenerator.cpp" />
-    <ClInclude Include="MpiHelper.cpp" />
+    <ClCompile Include="MpiHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Decomposition.h" />
